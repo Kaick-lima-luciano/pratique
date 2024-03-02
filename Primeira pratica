@@ -1,0 +1,80 @@
+import java.io.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Evento {
+    private String nome;
+    private String endereco;
+    private String categoria;
+    private LocalDateTime horario;
+    private String descricao;
+
+    // Construtor, getters e setters aqui...
+}
+
+public class Usuario {
+    private String nome;
+    private String endereco;
+    private String email;
+
+    // Construtor, getters e setters aqui...
+}
+
+public class EventoManager {
+    private List<Evento> eventos;
+
+    public EventoManager() {
+        eventos = new ArrayList<>();
+    }
+
+    public void cadastrarEvento(Evento evento) {
+        eventos.add(evento);
+    }
+
+    public List<Evento> getEventos() {
+        return eventos;
+    }
+
+    // Outros métodos para gerenciar os eventos, como consultar, participar, etc.
+}
+
+public class Main {
+    private static final String EVENT_FILE = "events.data";
+    private static EventoManager eventoManager;
+
+    public static void main(String[] args) {
+        eventoManager = new EventoManager();
+        carregarEventos();
+
+        Scanner scanner = new Scanner(System.in);
+
+        // Implementar o menu de interação com o usuário aqui...
+
+        scanner.close();
+    }
+
+    private static void carregarEventos() {
+        try {
+            ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(EVENT_FILE));
+            eventoManager = (EventoManager) inputStream.readObject();
+            inputStream.close();
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Erro ao carregar eventos: " + e.getMessage());
+        }
+    }
+
+    private static void salvarEventos() {
+        try {
+            ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream(EVENT_FILE));
+            outputStream.writeObject(eventoManager);
+            outputStream.close();
+        } catch (IOException e) {
+            System.out.println("Erro ao salvar eventos: " + e.getMessage());
+        }
+    }
+
+    // Implementar outros métodos auxiliares aqui...
+}
+    
